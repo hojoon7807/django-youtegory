@@ -10,11 +10,10 @@
     <meta property="og:image" content="{% static 'RenderedImage.jpeg' %}" />
     <title>전체 카테고리</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
-    <link rel="stylesheet" href="categoryPage.css">
-    <link rel="stylesheet" href="{% static 'categoryPage.css' %}">
-    <script defer src="{% static 'categoryPage.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/categoryPage.css' %}">
+    <script defer src="{% static 'js/categoryPage.js' %}"></script>
+    <script defer src="{% static 'js/csrf.js' %}"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <script defer src="categoryPage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -25,23 +24,30 @@
     <script>
         function getVideos() {
             $(".category li").click(function () {
+                const idName = {
+                    '1': "Film&Animation", '2': "Cars&Vehicles", '10': "Music", '15': "Pets&Animals", '17': "Sports",
+                    '19': "Travel&Events", '20': "Gaming", '22': "People&Blogs", '23': "Comedy", '24': "Entertainmetn", '25': "News&Politics",
+                    '26': "Howto&Style", '27': "Education", '28': "Science&Technology"
+                }
                 const categoryId = this.id;
-                console.log(categoryId)
-
                 $.ajax({
                     type: "POST",
-                    url: "/categories/videos",
-                    data: { 'category_give': categoryId },
+                    url: "/categories",
+                    data: { 'category_id': categoryId, 'category_name': idName[categoryId] },
                     success: function (response) {
-                        if (response['result'] == 'success') {
-                            alert('카테고리 추가 완료')
-                            window.location.reload()
-                        }
+                        $.ajax({
+                            type: "POST",
+                            url: `/categories/${categoryId}/videos`,
+                            data: { 'category_id': categoryId },
+                            success: function (response) {
+                                window.location.reload()
+                            }
+                        });
                     }
-                });
+                })
             })
         }
-        
+
     </script>
 </head>
 
