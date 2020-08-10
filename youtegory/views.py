@@ -9,7 +9,7 @@ from .youtubeapi import get_videos
 
 # Create your views here.
 def main(request):
-    return render(request, 'main.html')
+    return render(request, 'dd.html')
 
 
 def category_list(request):
