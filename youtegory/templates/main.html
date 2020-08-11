@@ -22,7 +22,9 @@
     <script defer src="{% static 'js/categoryPage.js' %}"></script>
     <script defer src="{% static 'js/csrf.js' %}"></script>
     <script defer src="{% static 'js/youtubeapi.js' %}"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
+        
 
         $(document).ready(function () {
             $('.selectCate').empty()// index.html 로드가 완료되면 자동으로 show_star() 함수를 호출합니다.
@@ -34,23 +36,23 @@
                 url: '/videos',
                 data: {},
                 success: function (response) {
-                        let videosLists = response;
-                        for (i = 0; i < videosLists.length; i++) {
-                            categoryName = videosLists[i]
-                            urlList = videosList[categoryName]
-                            header = `<h4>${categoryName}<a class="icon" onclick="deleteCategory()"><i class="fas fa-times"></i></a></h4>
+                    let videosLists = response;
+                    for (i = 0; i < videosLists.length; i++) {
+                        categoryName = videosLists[i]
+                        urlList = videosList[categoryName]
+                        header = `<h4>${categoryName}<a class="icon" onclick="deleteCategory()"><i class="fas fa-times"></i></a></h4>
                             <div class="videos">`
-                            for (j = 0; j < urlList.length; j++) {
-                                url = urlList[j]["url"]
-                                makeIframe = `<iframe src=${url}
+                        for (j = 0; j < urlList.length; j++) {
+                            url = urlList[j]["url"]
+                            makeIframe = `<iframe src=${url}
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>`
-                                header = header + makeIframe
-                            }
-                            makeList = header + "</div>"
-                            $('.selectCate').append(makeList);
+                            header = header + makeIframe
                         }
-                    
+                        makeList = header + "</div>"
+                        $('.selectCate').append(makeList);
+                    }
+
                 }
             })
         }

@@ -5,11 +5,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Category, Video
 from .serializers import CategorySerializer, VideoSerializer
-from .youtubeapi import get_videos
 
 # Create your views here.
 def main(request):
-    return render(request, 'dd.html')
+    return render(request, 'main.html')
 
 
 def category_list(request):
