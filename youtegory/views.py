@@ -34,10 +34,9 @@ def category_new(request):
 @api_view(['POST','PUT','DELETE'])
 def video_new(request, category_id):
     if request.method == 'POST':
-        category_id = request.POST['category_id']
-        dics = get_videos(category_id)
-        for dic in dics:
-            serializer = VideoSerializer(data=dic)
+        videoList = request.data['videoList']
+        for video in videoList:
+            serializer = VideoSerializer(data=video)
             if serializer.is_valid():
                 serializer.save()
         
