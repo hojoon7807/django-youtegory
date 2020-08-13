@@ -34,11 +34,10 @@ def category_new(request):
 @api_view(['POST','PUT','DELETE'])
 def video_new(request, category_id):
     if request.method == 'POST':
-        videoList = request.data['videoList']
-        for video in videoList:
-            serializer = VideoSerializer(data=video)
-            if serializer.is_valid():
-                serializer.save()
-        
-
+        print(request.data)
+        serializer = VideoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 

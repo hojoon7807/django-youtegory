@@ -8,7 +8,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class VideoSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
     class Meta:
         model = Video
         fields = ('category', 'video_id', 'title')
