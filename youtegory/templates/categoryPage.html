@@ -42,6 +42,7 @@
                     '27': "Education",
                     '28': "Science&Technology"
                 }
+
                 let categoryData = {'category_id': categoryId, 'category_name': categoryName[categoryId]}
                 let response = await fetch('/categories', {
                     method: 'POST',

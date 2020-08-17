@@ -7,12 +7,13 @@ from django.conf import settings
 class Category(models.Model):
     category_id = models.IntegerField()
     category_name = models.CharField(max_length=20)
+
     def __str__(self):
-        return self.category_name
+        return self.category_id
 
 
 class Video(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='videos', on_delete=models.CASCADE)
     video_id = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
 

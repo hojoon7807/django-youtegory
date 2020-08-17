@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -17,18 +18,22 @@ def category_list(request):
 
 @api_view(['GET'])
 def video_list(request):
-    videolists = Video.objects.all()
+    videolists = Category.objects.all()
     serializer = VideoSerializer(videolists, many=True)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
 def category_new(request):
-    serializer = CategorySerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    category = Category(category_id=request.data['category_id'],
+                        category_name=request.data['category_name'])
+    category.save()
+    return HttpResponse(status=201)
+    # serializer = CategorySerializer(data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST','PUT','DELETE'])
